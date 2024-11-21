@@ -7,6 +7,7 @@ def generate_graph(n, p):
 
     """
     - Gera um grafo não direcionado com `n` vértices, onde cada aresta existe com probabilidade `p`
+
     - Retorna a representação de lista de adjacência e a contagem de arestas
     """
 
@@ -58,3 +59,21 @@ def bfs(graph, start_vertex, n):
         colors[u] = 'BLACK'
 
     return max_distance
+
+def compute_graph_properties_with_bfs(adjacency_list, n):
+
+    """
+    - Calcula as propriedades de um grafo representado por lista de adjacência
+    - Usa a BFS para calcular o diâmetro do grafo
+
+    - Retorna o grau mínimo, grau máximo, grau médio e diâmetro do grafo
+    """
+
+    degrees = [len(adjacency_list[v]) for v in range(n)]
+    gmin = min(degrees)
+    gmax = max(degrees)
+    gmed = np.mean(degrees)
+
+    diam = max(bfs(adjacency_list, v, n) for v in range(n) if adjacency_list[v])
+
+    return gmin, gmax, gmed, diam
