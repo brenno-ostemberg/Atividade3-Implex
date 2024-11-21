@@ -77,3 +77,21 @@ def compute_graph_properties_with_bfs(adjacency_list, n):
     diam = max(bfs(adjacency_list, v, n) for v in range(n) if adjacency_list[v])
 
     return gmin, gmax, gmed, diam
+
+def generate_graph_and_compute_properties_bfs(ini, fim, stp, p):
+
+    """
+    - Gera grafos com `n` variando de `ini` a `fim` com passo `stp` e probabilidade de aresta `p`
+    - Calcula as propriedades de cada grafo gerado
+
+    - Retorna uma lista de tuplas com os resultados
+    """
+
+    results = []
+
+    for n in range(ini, fim + 1, stp):
+        adjacency_list, edge_count = generate_graph(n, p)
+        gmin, gmax, gmed, diam = compute_graph_properties_with_bfs(adjacency_list, n)
+        results.append((n, edge_count, gmin, gmax, gmed, diam))
+
+    return results
