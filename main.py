@@ -95,3 +95,13 @@ def generate_graph_and_compute_properties_bfs(ini, fim, stp, p):
         results.append((n, edge_count, gmin, gmax, gmed, diam))
 
     return results
+
+# Armazenando os resultados dos experimentos na tupla "results"
+results = generate_graph_and_compute_properties_bfs(10, 50, 10, 0.1)
+
+# Mostrando na tela os resultados
+header = f"{'V':>4} {'E':>4} {'gmin':>5} {'gmax':>5} {'gmed':>7} {'diam':>5}"
+print(header)
+print("-" * len(header))
+for row in results:
+    print(f"{row[0]:>4} {row[1]:>4} {row[2]:>5} {row[3]:>5} {row[4]:>7.2f} {row[5]:>5}")
