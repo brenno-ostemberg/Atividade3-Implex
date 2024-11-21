@@ -26,60 +26,35 @@ def generate_graph(n, p):
 
     return adjacency_list, edge_count
 
-def compute_graph_properties(adjacency_list, n):
+def bfs(graph, start_vertex, n):
 
     """
-    Computa as propriedades do grafo, incluindo:
+    - Implementação da BFS que calcula a distância máxima de um vértice inicial para todos os outros vértices
 
-    - gmin: grau mínimo
-
-    - gmax: grau máximo
-
-    - gmed: grau médio
-
-    - diam: diâmetro
-
-    Retorna uma tupla com essas propriedades
+    - Retorna essa distância máxima 
     """
 
-    # Passo 1: Computar graus dos vértices
+    colors = ['WHITE'] * n 
+    distances = [float('inf')] * n
+    parents = [None] * n
 
-    degrees = [len(adjacency_list[v]) for v in range(n)]
+    colors[start_vertex] = 'GRAY'
+    distances[start_vertex] = 0
+    parents[start_vertex] = None
 
-    gmin = min(degrees)
+    # Fila BFS
+    queue = deque([start_vertex])
 
-    gmax = max(degrees)
+    max_distance = 0
+    while queue:
+        u = queue.popleft()
+        for v in graph[u]:
+            if colors[v] == 'WHITE':
+                colors[v] = 'GRAY'
+                distances[v] = distances[u] + 1
+                parents[v] = u
+                queue.append(v)
+                max_distance = max(max_distance, distances[v])
+        colors[u] = 'BLACK'
 
-    gmed = np.mean(degrees)
-
-    # Passo 2: Computar diâmetro do grafo
-
-    def bfs_diameter(start_vertex):
-
-        visited = [-1] * n
-
-        queue = deque([start_vertex])
-
-        visited[start_vertex] = 0
-
-        max_distance = 0
-
-        while queue:
-
-            current = queue.popleft()
-
-            for neighbor in adjacency_list[current]:
-
-                if visited[neighbor] == -1:
-
-                    visited[neighbor] = visited[current] + 1
-
-                    queue.append(neighbor)
-
-                    max_distance = max(max_distance, visited[neighbor])
-
-        return max_distance
-
-    diam = max(bfs_diameter(v) for v in range(n) if adjacency_list[v])
-
-    return gmin, gmax, gmed, diam
+    return max_distance
