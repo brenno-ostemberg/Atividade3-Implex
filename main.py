@@ -97,7 +97,7 @@ def generate_graph_and_compute_properties_bfs(ini, fim, stp, p):
     return results
 
 # Armazenando os resultados dos experimentos na tupla "results"
-results = generate_graph_and_compute_properties_bfs(10, 50, 10, 0.1)
+results = generate_graph_and_compute_properties_bfs(10, 200, 10, 0.1)
 
 # Mostrando na tela os resultados
 header = f"{'V':>4} {'E':>4} {'gmin':>5} {'gmax':>5} {'gmed':>7} {'diam':>5}"
